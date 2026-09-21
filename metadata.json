@@ -1,0 +1,6 @@
+{
+  "name": "RBI Empirical Research Hub | Developed by Ketrapal Konar",
+  "description": "Empirical Research Hub & Econometric Data Pipelines for RBI 10-Sector Credit Deployment (1990–2026), developed by Ketrapal Konar.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
