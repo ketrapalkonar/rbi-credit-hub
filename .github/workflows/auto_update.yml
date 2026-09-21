@@ -2,15 +2,14 @@ name: RBI 15-Day Data Auto-Sync
 
 on:
   schedule:
-    # Runs at 00:00 UTC on the 1st and 15th of every month
     - cron: '0 0 1,15 * *'
-  workflow_dispatch: # Allows manual trigger anytime from GitHub UI
+  workflow_dispatch:
 
 jobs:
   sync-rbi-data:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Explicitly grants permission to push updated data
+      contents: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -28,7 +27,6 @@ jobs:
           python -c "
           import urllib.request, json, os, datetime
           
-          # Fetches official RBI credit series mirror
           url = 'https://raw.githubusercontent.com/datasets/rbi-credit/main/data.json'
           try:
               req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -42,11 +40,11 @@ jobs:
               json.dump(data, f, indent=2)
           "
 
-     - name: Commit and Push Updated Data
+      - name: Commit and Push Updated Data
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add data/
           git commit -m "Auto-update: RBI 10-Sector Credit data [$(date -u +'%Y-%m-%d')]" || exit 0
           git pull --rebase origin main
-          git push
+          git push origin main
